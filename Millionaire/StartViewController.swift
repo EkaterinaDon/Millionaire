@@ -13,6 +13,12 @@ class StartViewController: UIViewController {
     
     @IBOutlet weak var resultsLabel: UILabel!
     
+    @IBAction func settingsButtonPressed(_ sender: Any) {
+        let settingsViewController = storyboard?.instantiateViewController(withIdentifier: "SettingsViewController") as! SettingsViewController
+        self.present(settingsViewController, animated: true, completion: nil)
+    }
+    
+    
     @IBAction func playButtonPressed(_ sender: Any) {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let gameViewController = storyboard.instantiateViewController(withIdentifier: "GameViewController") as! GameViewController

@@ -7,21 +7,22 @@
 
 import Foundation
 
-struct QuestionAnswers {
+struct QuestionAnswers: Codable {
     
     let id: Int
     let answer: String
     
 }
 
-struct Question {
+struct Question: Codable {
     let id: Int
     let question: String
     var answers: [QuestionAnswers]
     let correctAnswer: Int
 }
 
-let questions: [Question] = [
+
+var questions: [Question] = [
     
     Question(id: 0, question: "1. Что сыграло решающую роль в превращении обезьяны в человека?", answers: [QuestionAnswers(id: 0, answer: "Ум"), QuestionAnswers(id: 1, answer: "Чувство юмора"), QuestionAnswers(id: 2, answer: "Сила"), QuestionAnswers(id: 3, answer: "Труд")], correctAnswer: 3),
     Question(id: 1, question: "Какое дерево является символом России?", answers: [QuestionAnswers(id: 0, answer: "Дуб"), QuestionAnswers(id: 1, answer: "Сосна"), QuestionAnswers(id: 2, answer: "Береза"), QuestionAnswers(id: 3, answer: "Ясень")], correctAnswer: 2),
@@ -30,4 +31,5 @@ let questions: [Question] = [
     Question(id: 4, question: "Как звали доктора в сказке Чуковского?", answers: [QuestionAnswers(id: 0, answer: "Хаус"), QuestionAnswers(id: 1, answer: "Лиза"), QuestionAnswers(id: 2, answer: "Айболит"), QuestionAnswers(id: 3, answer: "Менгеле")], correctAnswer: 2)
 
 ]
+
 
