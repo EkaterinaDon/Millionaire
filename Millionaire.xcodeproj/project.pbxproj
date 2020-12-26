@@ -88,6 +88,7 @@
 		C40A97CC2584F7D500E9D37E /* Millionaire */ = {
 			isa = PBXGroup;
 			children = (
+				C4CECBB9258BBABE002F3CA9 /* Difficulty */,
 				C40A97CD2584F7D500E9D37E /* AppDelegate.swift */,
 				C40A97CF2584F7D500E9D37E /* SceneDelegate.swift */,
 				C455B312258F732F00360A3A /* Observable.swift */,
@@ -97,7 +98,6 @@
 				C40A97E92584F91600E9D37E /* Game */,
 				C40A97D92584F7D800E9D37E /* Assets.xcassets */,
 				C40A97DB2584F7D800E9D37E /* LaunchScreen.storyboard */,
-				C4CECBB9258BBABE002F3CA9 /* Difficulty */,
 				C40A97EC2584F9AD00E9D37E /* StartViewController.swift */,
 				C40A97DE2584F7D800E9D37E /* Info.plist */,
 				C40A97D62584F7D500E9D37E /* Millionaire.xcdatamodeld */,

@@ -12,7 +12,7 @@ final class HardStrategy: CreateQuestionsStrategy {
     var questions2 = questions
 
     func randomQuestions() -> [Question] {
-        print("make it hard")
+ 
         return questions2.shuffled()
     }
     

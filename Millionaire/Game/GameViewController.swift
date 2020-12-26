@@ -74,7 +74,7 @@ class GameViewController: UIViewController {
     func loadQuestion() {
         
         createQuestionsStrategy.questions2 = questions
-        self.createQuestionsStrategy.randomQuestions() // не понятно как примерить стратегию 
+        let questions = self.createQuestionsStrategy.randomQuestions()
         
         
         if answeredQuestions.value < questions.count {
