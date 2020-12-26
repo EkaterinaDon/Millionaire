@@ -11,14 +11,23 @@ protocol GameResults: class {
     func didEndGame(withResult result: Int)
 }
 
-var answeredQuestions: Int = 0
+var answeredQuestions = Observable<Int>(0) 
 var correctQuestions: Int = 0
 
 class GameViewController: UIViewController {
     
     var question: Question?
+
+    private var createQuestionsStrategy: CreateQuestionsStrategy {
+        switch Game.shared.difficulty {
+        case .easy:
+            return EasyStrategy()
+        case .hard:
+            return HardStrategy()
+        }
+    }
     
-    weak var gameDelegate: GameResults? 
+    weak var gameDelegate: GameResults?
     
     @IBOutlet weak var questionLabel: UILabel!
     
@@ -30,6 +39,7 @@ class GameViewController: UIViewController {
     
     @IBOutlet weak var answerD: UIButton!
     
+    @IBOutlet weak var countLabel: UILabel!
     
     @IBAction func answerAButtonPressed(_ sender: Any) {
         checkCorrectAnswer(0)
@@ -52,12 +62,23 @@ class GameViewController: UIViewController {
         
         loadQuestion()
         
+        countLabel.text = "Количество правильных ответов"
+        answeredQuestions.addObserver(self, options: [.new, .initial], closure: { [weak self] (answeredQuestions, _) in
+            if answeredQuestions > 0 {
+                self?.countLabel.text = "\(correctQuestions + 1) правильных ответов из \(questions.count) вопросов"
+            }
+        })
     }
+    
     
     func loadQuestion() {
         
-        if answeredQuestions < questions.count {
-            question = questions[answeredQuestions]
+        createQuestionsStrategy.questions2 = questions
+        let questions = self.createQuestionsStrategy.randomQuestions()
+        
+        
+        if answeredQuestions.value < questions.count {
+            question = questions[answeredQuestions.value]
             question?.answers.shuffle()
         }
         questionLabel.text = question?.question
@@ -90,11 +111,11 @@ class GameViewController: UIViewController {
     }
     
     func correctAnswer (_ correctAnswerText: String) {
-        answeredQuestions = answeredQuestions + 1
+        answeredQuestions.value = answeredQuestions.value + 1
         correctQuestions = correctQuestions + 1
         loadQuestion()
         
-        if answeredQuestions < questions.count {
+        if answeredQuestions.value < questions.count {
             loadQuestion()
         } else {
             gameOver()
@@ -102,15 +123,16 @@ class GameViewController: UIViewController {
     }
     
     func incorrectAnswer(_ correctAnswerText: String) {
-        answeredQuestions = answeredQuestions + 1
+        answeredQuestions.value = answeredQuestions.value + 1
         gameOver()
     }
     
     func gameOver() {
-        let score = GameSession(date: Date(), correctAnswers: correctQuestions, answersCount: answeredQuestions)
+        let score = GameSession(date: Date(), correctAnswers: correctQuestions, answersCount: answeredQuestions.value)
         Game.shared.addScore(score)
+        
         self.gameDelegate?.didEndGame(withResult: correctQuestions)
-        answeredQuestions = 0
+        answeredQuestions.value = 0
         correctQuestions = 0
         self.dismiss(animated: true, completion: nil)
     }
